@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +9,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;900&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <!-- Interactive Terminal Modal -->
+    <div id="terminal-modal" class="terminal-modal hidden">
+        <div class="terminal-header">
+            <span class="terminal-title">root@kali:~</span>
+            <button class="close-terminal">X</button>
+        </div>
+        <div class="terminal-body">
+            <div class="terminal-output" id="terminal-output">
+                <p>Kali GNU/Linux Rolling [Version 2024.1]</p>
+                <p>Type 'help' to see available commands.</p>
+            </div>
+            <div class="terminal-input-line">
+                <span class="prompt">root@kali:~$</span>
+                <input type="text" id="terminal-input" autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Terminal Toggle -->
+    <button id="terminal-toggle" class="terminal-toggle" title="Open Terminal (~)"><i
+            class="fas fa-terminal"></i></button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+    <script src="js/three-hero.js" defer></script>
+    <script src="js/three-skills.js" defer></script>
     <script src="script.js" defer></script>
 </head>
+
 <body>
     <!-- Custom Cursor -->
     <div class="custom-cursor">
@@ -21,227 +50,292 @@
         <div class="cursor-trail"></div>
     </div>
 
+    <!-- CRT Overlay -->
+    <div class="crt-overlay"></div>
+
+    <!-- System Status HUD -->
+    <div class="system-status">
+        <div class="status-item">SYSTEM: <span class="status-value online">ONLINE</span></div>
+        <div class="status-item">ENCRYPTION: <span class="status-value">AES-256</span></div>
+        <div class="status-item">IP: <span class="status-value ip-addr">127.0.0.1</span></div>
+        <div class="status-item">CPU: <span class="status-value cpu-load">12%</span></div>
+    </div>
+
     <!-- Dark Mode Toggle -->
     <button class="dark-mode-toggle" aria-label="Toggle dark mode">
         <i class="fas fa-moon"></i>
     </button>
 
-    <!-- Navigation -->
-    <header class="navbar animate-section">
-        <div class="container">
-            <nav class="nav-content">
-                <div class="logo">
-                    <span class="logo-text glitch" data-text="H4X0R">H4X0R</span>
-                    <span class="logo-dot"></span>
-                </div>
-                <ul class="nav-links" role="navigation">
-                    <li><a href="#hero" class="nav-link">Home</a></li>
-                    <li><a href="#about" class="nav-link">About</a></li>
-                    <li><a href="#skills" class="nav-link">Skills</a></li>
-                    <li><a href="#projects" class="nav-link">Projects</a></li>
-                </ul>
-                <button class="menu-btn" aria-label="Toggle menu" aria-expanded="false">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </nav>
-        </div>
-    </header>
+    <!-- Boot Sequence Overlay -->
+    <div id="boot-screen" class="boot-screen">
+        <div id="boot-text" class="boot-text"></div>
+    </div>
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero animate-section">
-        <canvas id="matrix-bg" aria-hidden="true"></canvas>
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="glitch typing" data-text="Arul Prakash R">Arul Prakash R</h1>
-                <p class="subtitle typing" data-text="Cybersecurity Specialist | Penetration Tester">Cybersecurity Specialist | Penetration Tester</p>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number">3+</span>
-                        <span class="stat-label">Years of Experience</span>
+    <!-- Main Content Wrapper for Parallax -->
+    <main id="content-wrapper">
+        <!-- Navigation -->
+        <header class="navbar animate-section">
+            <div class="container">
+                <nav class="nav-content">
+                    <div class="logo">
+                        <span class="logo-text glitch" data-text="> H4X0R_">> H4X0R_</span>
+                        <span class="logo-dot"></span>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number">15+</span>
-                        <span class="stat-label">Security Assessments</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">10+</span>
-                        <span class="stat-label">Vulnerabilities Mitigated</span>
-                    </div>
-                </div>
-                <div class="cta-buttons">
-                    <a href="assets/resume.pdf" class="btn primary animate-btn" download>Download Resume <i class="fas fa-download"></i></a>
-                    <a href="#projects" class="btn secondary animate-btn">View Projects <i class="fas fa-shield-alt"></i></a>
-                </div>
+                    <ul class="nav-links" role="navigation">
+                        <li><a href="#hero" class="nav-link">~/Home</a></li>
+                        <li><a href="#about" class="nav-link">~/About</a></li>
+                        <li><a href="#skills" class="nav-link">~/Skills</a></li>
+                        <li><a href="#projects" class="nav-link">~/Projects</a></li>
+                    </ul>
+                    <button class="menu-btn" aria-label="Toggle menu" aria-expanded="false">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </nav>
             </div>
-        </div>
-    </section>
+        </header>
 
-    <!-- About Section -->
-    <section id="about" class="about animate-section">
-        <div class="container">
-            <h2 class="section-title glitch" data-text="About Me">About Me</h2>
-            <div class="about-content">
-                <div class="about-image">
-                    <img src="assets/profile.jpeg" alt="Arul Prakash R, Cybersecurity Specialist" class="profile-photo-enhanced">
-                </div>
-                <div class="about-text">
-                    <p>Arul Prakash R is a dedicated Cybersecurity Specialist with over three years of experience in ethical hacking, malware analysis, and digital forensics. I specialize in conducting penetration tests, implementing robust security solutions, and protecting organizations from advanced cyber threats through meticulous assessments and monitoring.</p>
-                    <p>My mission is to deliver cutting-edge security strategies that safeguard critical digital assets while ensuring compliance with industry standards.</p>
-                    <div class="about-details">
-                        <div class="detail-item tilt-card">
-                            <span class="detail-label">Name:</span>
-                            <span class="detail-value">Arul Prakash R</span>
+        <!-- Hero Section -->
+        <section id="hero" class="hero animate-section">
+            <canvas id="matrix-bg" aria-hidden="true"></canvas>
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="glitch decrypt-effect" data-text="Arul Prakash R">Arul Prakash R</h1>
+                    <p class="subtitle typing" data-text="> Cybersecurity Specialist | Penetration Tester_">>
+                        Cybersecurity
+                        Specialist | Penetration Tester_</p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">3+</span>
+                            <span class="stat-label">Years of Experience</span>
                         </div>
-                        <div class="detail-item tilt-card">
-                            <span class="detail-label">Email:</span>
-                            <span class="detail-value">arulprakashr01@gmail.com</span>
+                        <div class="stat-item">
+                            <span class="stat-number">15+</span>
+                            <span class="stat-label">Security Assessments</span>
                         </div>
-                        <div class="detail-item tilt-card">
-                            <span class="detail-label">Location:</span>
-                            <span class="detail-value">India</span>
+                        <div class="stat-item">
+                            <span class="stat-number">10+</span>
+                            <span class="stat-label">Vulnerabilities Mitigated</span>
                         </div>
                     </div>
+                    <div class="cta-buttons">
+                        <a href="assets/resume.pdf" class="btn primary animate-btn" download>Download Resume <i
+                                class="fas fa-download"></i></a>
+                        <a href="#projects" class="btn secondary animate-btn">View Projects <i
+                                class="fas fa-shield-alt"></i></a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills animate-section">
-        <canvas id="matrix-bg-skills" aria-hidden="true"></canvas>
-        <div class="container">
-            <h2 class="section-title glitch" data-text="My Expertise">My Expertise</h2>
-            <div class="skills-grid">
-                <div class="skill-card tilt-card">
-                    <i class="fas fa-user-secret"></i>
-                    <h3>Ethical Hacking</h3>
-                    <p>Authorized security testing and vulnerability assessment</p>
-                    <div class="skill-progress">
-                        <div class="progress-bar" style="width: 90%"></div>
-                    </div>
-                </div>
-                <div class="skill-card tilt-card">
-                    <i class="fas fa-bug"></i>
-                    <h3>Malware Analysis</h3>
-                    <p>Deep analysis of malicious software and threat detection</p>
-                    <div class="skill-progress">
-                        <div class="progress-bar" style="width: 85%"></div>
-                    </div>
-                </div>
-                <div class="skill-card tilt-card">
-                    <i class="fas fa-search"></i>
-                    <h3>Digital Forensics</h3>
-                    <p>Investigation and analysis of digital evidence</p>
-                    <div class="skill-progress">
-                        <div class="progress-bar" style="width: 80%"></div>
-                    </div>
-                </div>
-                <div class="skill-card tilt-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>Firewall/IDS/IPS</h3>
-                    <p>Network security implementation and monitoring</p>
-                    <div class="skill-progress">
-                        <div class="progress-bar" style="width: 88%"></div>
-                    </div>
-                </div>
-                <div class="skill-card tilt-card">
-                    <i class="fas fa-crosshairs"></i>
-                    <h3>Penetration Testing</h3>
-                    <p>Comprehensive security assessments and vulnerability scanning</p>
-                    <div class="skill-progress">
-                        <div class="progress-bar" style="width: 92%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects animate-section">
-        <div class="container">
-            <h2 class="section-title glitch" data-text="Security Projects">Security Projects</h2>
-            <div class="project-filters">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="ssti">SSTI</button>
-                <button class="filter-btn" data-filter="hrs">HRS</button>
-            </div>
-            <div class="projects-grid">
-                <article class="project-card tilt-card" data-category="ssti">
-                    <div class="project-image">
-                        <img src="assets/ssti-project.jpg" alt="Server-Side Template Injection">
-                        <div class="project-overlay">
-                            <div class="project-tags">
-                                <span>SSTI</span>
-                                <span>Web Security</span>
+        <!-- About Section -->
+        <section id="about" class="about animate-section">
+            <div class="container">
+                <h2 class="section-title glitch decrypt-effect" data-text="> About Me_">> About Me_</h2>
+                <div class="about-content">
+                    <div class="about-image">
+                        <div class="flip-container">
+                            <div class="flipper">
+                                <div class="front">
+                                    <img src="C:\Users\Admin\Downloads\1759132189750.jpg" alt="Arul Prakash R"
+                                        class="profile-photo-enhanced">
+                                </div>
+                                <div class="back">
+                                    <img src="C:\Users\Admin\Downloads\1759132189750.jpg" alt="Arul Prakash R"
+                                        class="profile-photo-enhanced" style="filter: invert(1);">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="project-content">
-                        <h3>Server-Side Template Injection (SSTI)</h3>
-                        <p>Automated SSTI vulnerability discovery project: built a safe, repeatable test harness that detects, classifies, and helps remediate Server-Side Template Injection issues in web applications.</p>
-                        <div class="project-details">
-                            <span><i class="fas fa-shield-alt"></i> Automated Detection</span>
-                            <span><i class="fas fa-chart-line"></i> 40% Security Improvement</span>
-                        </div>
-                        <a href="#" class="btn secondary animate-btn">View Details</a>
-                    </div>
-                </article>
-                <article class="project-card tilt-card" data-category="hrs">
-                    <div class="project-image">
-                        <img src="assets/hrss-project.jpg" alt="HRSS Vulnerability Finding">
-                        <div class="project-overlay">
-                            <div class="project-tags">
-                                <span>HTTP Request Smuggling</span>
-                                <span>Network Security</span>
+                    <div class="about-text">
+                        <p>Arul Prakash R is a dedicated Cybersecurity Specialist with over three years of experience in
+                            ethical hacking, malware analysis, and digital forensics. I specialize in conducting
+                            penetration
+                            tests, implementing robust security solutions, and protecting organizations from advanced
+                            cyber
+                            threats through meticulous assessments and monitoring.</p>
+                        <p>My mission is to deliver cutting-edge security strategies that safeguard critical digital
+                            assets
+                            while ensuring compliance with industry standards.</p>
+                        <div class="about-details">
+                            <div class="detail-item tilt-card">
+                                <span class="detail-label">Name:</span>
+                                <span class="detail-value">Arul Prakash R</span>
+                            </div>
+                            <div class="detail-item tilt-card">
+                                <span class="detail-label">Email:</span>
+                                <span class="detail-value">arulprakashr01@gmail.com</span>
+                            </div>
+                            <div class="detail-item tilt-card">
+                                <span class="detail-label">Location:</span>
+                                <span class="detail-value">India</span>
                             </div>
                         </div>
                     </div>
-                    <div class="project-content">
-                        <h3>HTTP Request Smuggling Scanner (HRSS)</h3>
-                        <p>An automated HTTP Request Smuggling (HRS) scanner that safely detects parsing mismatches across proxies, gateways, and backend servers, produces reproducible lab-only PoCs, and provides actionable remediation guidance.</p>
-                        <div class="project-details">
-                            <span><i class="fas fa-bug"></i> Reproducible PoCs</span>
-                            <span><i class="fas fa-tools"></i> Actionable Remediation</span>
-                        </div>
-                        <a href="#" class="btn secondary animate-btn">View Details</a>
-                    </div>
-                </article>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
-    <footer class="footer animate-section">
-        <canvas id="matrix-bg-footer" aria-hidden="true"></canvas>
-        <div class="container">
-            <div class="footer-content">
-                <div class="contact-info">
-                    <p>Contact: <a href="mailto:arulprakashr01@gmail.com">arulprakashr01@gmail.com</a></p>
-                </div>
-                <div class="social-links">
-                    <a href="#" class="social-link animate-social" data-tooltip="GitHub" aria-label="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="#" class="social-link animate-social" data-tooltip="LinkedIn" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="#" class="social-link animate-social" data-tooltip="Twitter" aria-label="Twitter">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                </div>
-                <div class="terminal">
-                    <div class="terminal-header">Terminal</div>
-                    <div class="terminal-body">
-                        <span class="prompt">$ </span>
-                        <input type="text" id="terminal-input" placeholder="Type 'whoami', 'help', or 'sendmsg <subject> <message>'..." aria-label="Terminal input">
-                        <div id="terminal-output"></div>
+        <!-- Skills Section -->
+        <section id="skills" class="skills animate-section">
+            <canvas id="matrix-bg-skills" aria-hidden="true"></canvas>
+            <div class="container">
+                <h2 class="section-title glitch decrypt-effect" data-text="> My Expertise_">> My Expertise_</h2>
+                <div class="skills-grid">
+                    <div class="skill-card tilt-card">
+                        <i class="fas fa-user-secret"></i>
+                        <div class="skill-header">
+                            <h3>Ethical Hacking</h3>
+                            <span class="skill-percentage">90%</span>
+                        </div>
+                        <p>Authorized security testing and vulnerability assessment</p>
+                        <div class="skill-progress">
+                            <div class="progress-bar" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-card tilt-card">
+                        <i class="fas fa-bug"></i>
+                        <div class="skill-header">
+                            <h3>Malware Analysis</h3>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                        <p>Deep analysis of malicious software and threat detection</p>
+                        <div class="skill-progress">
+                            <div class="progress-bar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-card tilt-card">
+                        <i class="fas fa-search"></i>
+                        <div class="skill-header">
+                            <h3>Digital Forensics</h3>
+                            <span class="skill-percentage">80%</span>
+                        </div>
+                        <p>Investigating cybercrimes and recovering data</p>
+                        <div class="skill-progress">
+                            <div class="progress-bar" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-card tilt-card">
+                        <i class="fas fa-network-wired"></i>
+                        <div class="skill-header">
+                            <h3>Network Security</h3>
+                            <span class="skill-percentage">95%</span>
+                        </div>
+                        <p>Securing infrastructure and monitoring traffic</p>
+                        <div class="skill-progress">
+                            <div class="progress-bar" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-card tilt-card">
+                        <i class="fas fa-crosshairs"></i>
+                        <div class="skill-header">
+                            <h3>Penetration Testing</h3>
+                            <span class="skill-percentage">92%</span>
+                        </div>
+                        <p>Comprehensive security assessments and vulnerability scanning</p>
+                        <div class="skill-progress">
+                            <div class="progress-bar" style="width: 92%"></div>
+                        </div>
                     </div>
                 </div>
-                <p class="copyright">&copy; 2025 Arul Prakash R. All rights reserved.</p>
             </div>
-        </div>
-    </footer>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects animate-section">
+            <div class="container">
+                <h2 class="section-title glitch decrypt-effect" data-text="> Security Projects_">> Security Projects_
+                </h2>
+                <div class="project-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="ssti">SSTI</button>
+                    <button class="filter-btn" data-filter="hrs">HRS</button>
+                </div>
+                <div class="projects-grid">
+                    <article class="project-card tilt-card" data-category="ssti">
+                        <div class="project-image">
+                            <img src="assets/ssti-project.jpg" alt="Server-Side Template Injection">
+                            <div class="project-overlay">
+                                <div class="project-tags">
+                                    <span>SSTI</span>
+                                    <span>Web Security</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Server-Side Template Injection (SSTI)</h3>
+                            <p>Automated SSTI vulnerability discovery project: built a safe, repeatable test harness
+                                that
+                                detects, classifies, and helps remediate Server-Side Template Injection issues in web
+                                applications.</p>
+                            <div class="project-details">
+                                <span><i class="fas fa-shield-alt"></i> Automated Detection</span>
+                                <span><i class="fas fa-chart-line"></i> 40% Security Improvement</span>
+                            </div>
+                            <a href="#" class="btn secondary animate-btn">View Details</a>
+                        </div>
+                    </article>
+                    <article class="project-card tilt-card" data-category="hrs">
+                        <div class="project-image">
+                            <img src="assets/hrss-project.jpg" alt="HRSS Vulnerability Finding">
+                            <div class="project-overlay">
+                                <div class="project-tags">
+                                    <span>HTTP Request Smuggling</span>
+                                    <span>Network Security</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>HTTP Request Smuggling Scanner (HRSS)</h3>
+                            <p>An automated HTTP Request Smuggling (HRS) scanner that safely detects parsing mismatches
+                                across proxies, gateways, and backend servers, produces reproducible lab-only PoCs, and
+                                provides actionable remediation guidance.</p>
+                            <div class="project-details">
+                                <span><i class="fas fa-bug"></i> Reproducible PoCs</span>
+                                <span><i class="fas fa-tools"></i> Actionable Remediation</span>
+                            </div>
+                            <a href="#" class="btn secondary animate-btn">View Details</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer animate-section">
+            <canvas id="matrix-bg-footer" aria-hidden="true"></canvas>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="contact-info">
+                        <p>Contact: <a href="mailto:arulprakashr01@gmail.com">arulprakashr01@gmail.com</a></p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link animate-social" data-tooltip="GitHub" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link animate-social" data-tooltip="LinkedIn" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link animate-social" data-tooltip="Twitter" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                    <div class="terminal">
+                        <div class="terminal-header">Terminal</div>
+                        <div class="terminal-body">
+                            <span class="prompt">$ </span>
+                            <input type="text" id="terminal-input"
+                                placeholder="Type 'whoami', 'help', or 'sendmsg <subject> <message>'..."
+                                aria-label="Terminal input">
+                            <div id="terminal-output"></div>
+                        </div>
+                    </div>
+                    <p class="copyright">&copy; 2025 Arul Prakash R. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </main>
 </body>
+
 </html>

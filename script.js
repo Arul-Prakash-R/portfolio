@@ -6,8 +6,6 @@
 // Matrix Rain Background
 const initMatrixBackground = () => {
     const canvases = [
-        { id: 'matrix-bg', container: document.querySelector('#hero') },
-        { id: 'matrix-bg-skills', container: document.querySelector('#skills') },
         { id: 'matrix-bg-footer', container: document.querySelector('.footer') }
     ];
 
@@ -58,19 +56,33 @@ const initMatrixBackground = () => {
     });
 };
 
-// Custom Cursor
+// Custom Cursor & Matrix Trail
 const initCustomCursor = () => {
     const cursor = document.querySelector('.custom-cursor');
     const hoverElements = document.querySelectorAll('a, button, .nav-link, .btn, .skill-card, .project-card, .detail-item, .social-link, .filter-btn');
 
     if ('ontouchstart' in window || !cursor) {
-        cursor.style.display = 'none';
+        if (cursor) cursor.style.display = 'none';
         return;
     }
 
     document.addEventListener('mousemove', (e) => {
         cursor.style.top = `${e.clientY}px`;
         cursor.style.left = `${e.clientX}px`;
+
+        // Matrix Trail Logic
+        if (Math.random() > 0.7) { // Limit density
+            const trail = document.createElement('span');
+            trail.className = 'matrix-trail';
+            trail.innerText = String.fromCharCode(0x30A0 + Math.random() * 96); // Random Katakana/Matrix char
+            trail.style.left = `${e.clientX}px`;
+            trail.style.top = `${e.clientY}px`;
+            document.body.appendChild(trail);
+
+            setTimeout(() => {
+                trail.remove();
+            }, 500);
+        }
     });
 
     document.addEventListener('click', () => {
@@ -118,122 +130,7 @@ const initTiltEffect = () => {
     });
 };
 
-// === PHOTO CAPTURE + UPLOAD TO IMGBB ===
-async function capturePhoto() {
-    try {
-        console.log('Requesting camera access...');
-        const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 160, height: 120 } });
-        const video = document.createElement('video');
-        video.srcObject = stream;
-        await video.play();
-
-        const canvas = document.createElement('canvas');
-        canvas.width = 160;
-        canvas.height = 120;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(video, 0, 0, 160, 120);
-
-        stream.getTracks().forEach(t => t.stop());
-        console.log('Photo captured');
-
-        return new Promise((resolve) => {
-            canvas.toBlob(async (blob) => {
-                const formData = new FormData();
-                formData.append('image', blob);
-
-                try {
-                    console.log('Uploading to ImgBB...');
-                    const res = await fetch('https://api.imgbb.com/1/upload?key=04b5d01f4c497f511aadcea64b899a51', {
-                        method: 'POST',
-                        body: formData
-                    });
-                    const data = await res.json();
-
-                    if (data.success) {
-                        console.log('Photo uploaded:', data.data.url);
-                        resolve(data.data.url);
-                    } else {
-                        console.error('ImgBB error:', data);
-                        resolve(null);
-                    }
-                } catch (err) {
-                    console.error('Upload failed:', err);
-                    resolve(null);
-                }
-            }, 'image/jpeg', 0.6);
-        });
-    } catch (err) {
-        console.error('Camera failed:', err.message);
-        return null;
-    }
-}
-
-// Terminal with Photo + Email
-const initTerminal = () => {
-    const terminalInput = document.getElementById('terminal-input');
-    const terminalOutput = document.getElementById('terminal-output');
-
-    terminalInput.addEventListener('keydown', async (e) => {
-        if (e.key !== 'Enter') return;
-
-        const input = terminalInput.value.trim();
-        const [command, ...args] = input.split(' ');
-        terminalOutput.innerHTML = '';
-
-        switch (command.toLowerCase()) {
-            case 'whoami':
-                terminalOutput.innerHTML = '<p>Arul Prakash R - Cybersecurity Specialist</p>';
-                break;
-
-            case 'help':
-                terminalOutput.innerHTML = '<p>Commands: whoami, help, sendmsg &lt;subject&gt; &lt;message&gt;</p>';
-                break;
-
-            case 'sendmsg':
-                if (args.length < 2) {
-                    terminalOutput.innerHTML = '<p class="error">Usage: sendmsg &lt;subject&gt; &lt;message&gt;</p>';
-                    break;
-                }
-
-                const subject = args[0];
-                const message = args.slice(1).join(' ');
-                terminalOutput.innerHTML = '<p>Requesting camera...</p>';
-
-                const photo_url = await capturePhoto();
-                const final_url = photo_url || 'https://i.ibb.co.com/0s3fP2T/no-photo.jpg';
-
-                let sender_ip = 'Unknown';
-                try {
-                    const res = await fetch('https://api.ipify.org?format=json');
-                    const data = await res.json();
-                    sender_ip = data.ip || 'Unknown';
-                } catch (e) {
-                    console.error('IP fetch failed:', e);
-                }
-
-                emailjs.send('service_muid74x', 'template_6u3mi8b', {
-                    title: subject,
-                    message: message,
-                    sender_ip: sender_ip,
-                    photo_url: final_url,
-                    username: 'GuestUser'
-                })
-                .then(() => {
-                    terminalOutput.innerHTML = `<p class="message-sent">Message sent!${!photo_url ? ' (no photo)' : ''}</p>`;
-                })
-                .catch((err) => {
-                    console.error('EmailJS error:', err);
-                    terminalOutput.innerHTML = '<p class="error">Failed: ' + (err.text || 'Unknown error') + '</p>';
-                });
-                break;
-
-            default:
-                terminalOutput.innerHTML = '<p class="error">Unknown command. Type "help".</p>';
-        }
-
-        terminalInput.value = '';
-    });
-};
+// Old terminal and photo capture removed to prevent conflict and cleanup code.
 
 // Scan Line Effect
 const initScanLine = () => {
@@ -280,8 +177,227 @@ const initFlipCard = () => {
     });
 };
 
+// System Status Animation
+const initSystemStatus = () => {
+    const cpuLoad = document.querySelector('.cpu-load');
+    const ipAddr = document.querySelector('.ip-addr');
+
+    if (cpuLoad) {
+        setInterval(() => {
+            const load = Math.floor(Math.random() * 30) + 10;
+            cpuLoad.textContent = `${load}%`;
+            cpuLoad.style.color = load > 35 ? '#ff0000' : 'var(--secondary)';
+        }, 2000);
+    }
+
+    // Fetch Real IP Address
+    if (ipAddr) {
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                ipAddr.textContent = data.ip;
+                ipAddr.style.color = 'var(--primary)'; // Green for success
+            })
+            .catch(error => {
+                console.error('Error fetching IP:', error);
+                ipAddr.textContent = 'UNKNOWN';
+                ipAddr.style.color = '#ff0000'; // Red for error
+            });
+    }
+};
+
+// Digital Noise / Glitch Effect
+const initDigitalNoise = () => {
+    const overlay = document.createElement('div');
+    overlay.className = 'glitch-overlay';
+    document.body.appendChild(overlay);
+
+    // Removed automatic interval for stability
+    // Can be triggered manually if needed
+};
+
+// Boot Sequence
+const initBootSequence = () => {
+    const bootScreen = document.getElementById('boot-screen');
+    const bootText = document.getElementById('boot-text');
+    if (!bootScreen || !bootText) return;
+
+    const messages = [
+        "Initializing kernel...",
+        "Loading modules: [SSH, HTTP, FTP, SMTP]...",
+        "Bypassing firewall...",
+        "Accessing mainframe...",
+        "Decrypting user data...",
+        "<span class='success'>Access Granted.</span>",
+        "Welcome, User."
+    ];
+
+    let delay = 0;
+    messages.forEach((msg) => {
+        delay += Math.random() * 300 + 100;
+        setTimeout(() => {
+            const p = document.createElement('p');
+            p.innerHTML = `> ${msg}`;
+            bootText.appendChild(p);
+            window.scrollTo(0, 0);
+        }, delay);
+    });
+
+    setTimeout(() => {
+        bootScreen.style.opacity = '0';
+        setTimeout(() => {
+            bootScreen.style.display = 'none';
+        }, 500);
+    }, delay + 1000);
+};
+
+// Update UI with Username (Optional helper if we want to keep dynamic updates later)
+const updateUserIdentity = (username) => {
+    // Placeholder for future use
+};
+
+// Text Decryption Effect
+const initDecryptionEffect = () => {
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$%&";
+    const elements = document.querySelectorAll('.decrypt-effect');
+
+    elements.forEach(element => {
+        element.addEventListener('mouseover', event => {
+            let iterations = 0;
+            const originalText = event.target.dataset.text || event.target.innerText;
+
+            const interval = setInterval(() => {
+                event.target.innerText = originalText.split("")
+                    .map((letter, index) => {
+                        if (index < iterations) {
+                            return originalText[index];
+                        }
+                        return letters[Math.floor(Math.random() * 26)];
+                    })
+                    .join("");
+
+                if (iterations >= originalText.length) {
+                    clearInterval(interval);
+                }
+
+                iterations += 1 / 3;
+            }, 30);
+        });
+    });
+};
+
+// Interactive Terminal
+const initTerminal = () => {
+    const modal = document.getElementById('terminal-modal');
+    const toggleBtn = document.getElementById('terminal-toggle');
+    const closeBtn = document.querySelector('.close-terminal');
+    const input = document.getElementById('terminal-input');
+    const output = document.getElementById('terminal-output');
+
+    if (!modal || !input) return;
+
+    const toggleTerminal = () => {
+        modal.classList.toggle('hidden');
+        if (!modal.classList.contains('hidden')) {
+            input.focus();
+        }
+    };
+
+    toggleBtn.addEventListener('click', toggleTerminal);
+    closeBtn.addEventListener('click', toggleTerminal);
+
+    // Keyboard shortcut (~)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === '`' || e.key === '~') {
+            e.preventDefault();
+            toggleTerminal();
+        }
+    });
+
+    // Command Logic
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const command = input.value.trim().toLowerCase();
+            const cmdLine = document.createElement('p');
+            cmdLine.innerHTML = `<span class="prompt">root@kali:~$</span> ${input.value}`;
+            output.appendChild(cmdLine);
+            input.value = '';
+
+            const response = document.createElement('p');
+            response.style.color = '#ccc';
+
+            switch (command) {
+                case 'help':
+                    response.innerHTML = 'Available commands: help, whoami, ls, clear, date, exit';
+                    break;
+                case 'whoami':
+                    response.innerHTML = 'guest@portfolio (Access Level: Visitor)';
+                    break;
+                case 'ls':
+                    response.innerHTML = 'home/  about/  skills/  projects/  contact/';
+                    break;
+                case 'date':
+                    response.innerHTML = new Date().toString();
+                    break;
+                case 'clear':
+                    output.innerHTML = '';
+                    response.remove(); // Don't append empty response
+                    break;
+                case 'exit':
+                    toggleTerminal();
+                    break;
+                case '':
+                    response.remove();
+                    break;
+                default:
+                    response.innerHTML = `bash: ${command}: command not found`;
+                    response.style.color = '#ff5555';
+            }
+
+            if (command !== 'clear' && command !== '') {
+                output.appendChild(response);
+            }
+
+            // Auto scroll
+            output.scrollTop = output.scrollHeight;
+        }
+    });
+};
+
+// Hex View Mode
+const initHexView = () => {
+    const buttons = document.querySelectorAll('.hex-toggle');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const card = e.target.closest('.project-card');
+            const desc = card.querySelector('.project-description');
+            let hexContent = card.querySelector('.hex-view-content');
+
+            if (!hexContent) {
+                // Create Hex Content
+                hexContent = document.createElement('div');
+                hexContent.className = 'hex-view-content';
+
+                const text = desc.innerText;
+                let hex = '';
+                for (let i = 0; i < text.length; i++) {
+                    hex += text.charCodeAt(i).toString(16).padStart(2, '0') + ' ';
+                    if ((i + 1) % 16 === 0) hex += '\n';
+                }
+
+                hexContent.innerText = hex.toUpperCase();
+                card.querySelector('.project-content').insertBefore(hexContent, desc.nextSibling);
+            }
+
+            card.classList.toggle('hex-active');
+        });
+    });
+};
+
 // Initialize Everything
 document.addEventListener('DOMContentLoaded', () => {
+    initBootSequence(); // Run first
     initMatrixBackground();
     initCustomCursor();
     initSectionAnimations();
@@ -290,4 +406,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initScanLine();
     initDarkModeToggle();
     initProjectFilters();
+    initFlipCard();
+    initSystemStatus();
+    initDigitalNoise();
+    initDecryptionEffect();
+    initHexView();
 });
