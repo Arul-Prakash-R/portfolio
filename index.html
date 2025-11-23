@@ -3,54 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Portfolio</title>
+    <title>Arul Prakash R | Cybersecurity Portfolio</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Add Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Add Google Fonts with fallback -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Add favicon -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
     <script src="script.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.7.0/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
-    <!-- Particle Background -->
-    <div id="particles-js"></div>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor">
+        <div class="cursor-inner"></div>
+        <div class="cursor-trail"></div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
 
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-content">
-            <div class="logo">
-                <span class="logo-text">Portfolio</span>
-                <div class="logo-dot"></div>
-            </div>
-            <div class="nav-links">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </div>
-            <button class="menu-btn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+    <header class="navbar animate-section">
+        <div class="container">
+            <nav class="nav-content">
+                <div class="logo">
+                    <span class="logo-text glitch" data-text="H4X0R">H4X0R</span>
+                    <span class="logo-dot"></span>
+                </div>
+                <ul class="nav-links" role="navigation">
+                    <li><a href="#hero" class="nav-link">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#skills" class="nav-link">Skills</a></li>
+                    <li><a href="#projects" class="nav-link">Projects</a></li>
+                </ul>
+                <button class="menu-btn" aria-label="Toggle menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
         </div>
-    </nav>
+    </header>
 
     <!-- Hero Section -->
-    <section id="hero" class="hero">
+    <section id="hero" class="hero animate-section">
+        <canvas id="matrix-bg" aria-hidden="true"></canvas>
         <div class="container">
             <div class="hero-content">
-                <h1 class="glitch" data-text="Arul Prakash R">Arul Prakash R</h1>
-                <p class="subtitle">Cybersecurity Specialist & Penetration Tester</p>
+                <h1 class="glitch typing" data-text="Arul Prakash R">Arul Prakash R</h1>
+                <p class="subtitle typing" data-text="Cybersecurity Specialist | Penetration Tester">Cybersecurity Specialist | Penetration Tester</p>
                 <div class="hero-stats">
                     <div class="stat-item">
                         <span class="stat-number">3+</span>
@@ -62,49 +67,41 @@
                     </div>
                     <div class="stat-item">
                         <span class="stat-number">10+</span>
-                        <span class="stat-label">Vulnerabilities Found</span>
+                        <span class="stat-label">Vulnerabilities Mitigated</span>
                     </div>
                 </div>
                 <div class="cta-buttons">
-                    <a href="#contact" class="btn primary">
-                        <span>Hire Me</span>
-                        <i class="fas fa-paper-plane"></i>
-                    </a>
-                    <a href="#projects" class="btn secondary">
-                        <span>View Projects</span>
-                        <i class="fas fa-shield-alt"></i>
-                    </a>
+                    <a href="assets/resume.pdf" class="btn primary animate-btn" download>Download Resume <i class="fas fa-download"></i></a>
+                    <a href="#projects" class="btn secondary animate-btn">View Projects <i class="fas fa-shield-alt"></i></a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="about">
+    <section id="about" class="about animate-section">
         <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content" style="display: flex; align-items: center; gap: 40px;">
+            <h2 class="section-title glitch" data-text="About Me">About Me</h2>
+            <div class="about-content">
                 <div class="about-image">
-                    <img src="profile.jpeg" alt="Profile Photo" class="profile-photo-enhanced">
+                    <img src="assets/profile.jpeg" alt="Arul Prakash R, Cybersecurity Specialist" class="profile-photo-enhanced">
                 </div>
                 <div class="about-text">
-                    <p>I'm a dedicated Cybersecurity Specialist with expertise in Ethical Hacking, Malware Analysis, and Digital Forensics. I specialize in conducting penetration tests, implementing security solutions, and protecting organizations from cyber threats through comprehensive security assessments and monitoring.</p>
+                    <p>Arul Prakash R is a dedicated Cybersecurity Specialist with over three years of experience in ethical hacking, malware analysis, and digital forensics. I specialize in conducting penetration tests, implementing robust security solutions, and protecting organizations from advanced cyber threats through meticulous assessments and monitoring.</p>
+                    <p>My mission is to deliver cutting-edge security strategies that safeguard critical digital assets while ensuring compliance with industry standards.</p>
                     <div class="about-details">
-                        <div class="detail-item">
+                        <div class="detail-item tilt-card">
                             <span class="detail-label">Name:</span>
                             <span class="detail-value">Arul Prakash R</span>
                         </div>
-                        <div class="detail-item">
+                        <div class="detail-item tilt-card">
                             <span class="detail-label">Email:</span>
                             <span class="detail-value">arulprakashr01@gmail.com</span>
                         </div>
-                        <div class="detail-item">
-                            <span class="detail-label">From:</span>
+                        <div class="detail-item tilt-card">
+                            <span class="detail-label">Location:</span>
                             <span class="detail-value">India</span>
                         </div>
-                    </div>
-                    <div class="about-cta">
-                        <a href="#" class="btn primary">Download CV</a>
                     </div>
                 </div>
             </div>
@@ -112,1019 +109,139 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="skills">
+    <section id="skills" class="skills animate-section">
+        <canvas id="matrix-bg-skills" aria-hidden="true"></canvas>
         <div class="container">
-            <h2 class="section-title">My Expertise</h2>
+            <h2 class="section-title glitch" data-text="My Expertise">My Expertise</h2>
             <div class="skills-grid">
-                <div class="skill-card">
+                <div class="skill-card tilt-card">
                     <i class="fas fa-user-secret"></i>
                     <h3>Ethical Hacking</h3>
                     <p>Authorized security testing and vulnerability assessment</p>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 90%"></div>
+                    </div>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card tilt-card">
                     <i class="fas fa-bug"></i>
                     <h3>Malware Analysis</h3>
                     <p>Deep analysis of malicious software and threat detection</p>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 85%"></div>
+                    </div>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card tilt-card">
                     <i class="fas fa-search"></i>
                     <h3>Digital Forensics</h3>
                     <p>Investigation and analysis of digital evidence</p>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 80%"></div>
+                    </div>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card tilt-card">
                     <i class="fas fa-shield-alt"></i>
                     <h3>Firewall/IDS/IPS</h3>
                     <p>Network security implementation and monitoring</p>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 88%"></div>
+                    </div>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card tilt-card">
                     <i class="fas fa-crosshairs"></i>
                     <h3>Penetration Testing</h3>
                     <p>Comprehensive security assessments and vulnerability scanning</p>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 92%"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="projects">
+    <section id="projects" class="projects animate-section">
         <div class="container">
-            <h2 class="section-title">Security Projects</h2>
+            <h2 class="section-title glitch" data-text="Security Projects">Security Projects</h2>
+            <div class="project-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="ssti">SSTI</button>
+                <button class="filter-btn" data-filter="hrs">HRS</button>
+            </div>
             <div class="projects-grid">
-                <div class="project-card">
+                <article class="project-card tilt-card" data-category="ssti">
                     <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b" alt="Network Security Assessment">
+                        <img src="assets/ssti-project.jpg" alt="Server-Side Template Injection">
                         <div class="project-overlay">
                             <div class="project-tags">
-                                <span>Penetration Testing</span>
+                                <span>SSTI</span>
+                                <span>Web Security</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Server-Side Template Injection (SSTI)</h3>
+                        <p>Automated SSTI vulnerability discovery project: built a safe, repeatable test harness that detects, classifies, and helps remediate Server-Side Template Injection issues in web applications.</p>
+                        <div class="project-details">
+                            <span><i class="fas fa-shield-alt"></i> Automated Detection</span>
+                            <span><i class="fas fa-chart-line"></i> 40% Security Improvement</span>
+                        </div>
+                        <a href="#" class="btn secondary animate-btn">View Details</a>
+                    </div>
+                </article>
+                <article class="project-card tilt-card" data-category="hrs">
+                    <div class="project-image">
+                        <img src="assets/hrss-project.jpg" alt="HRSS Vulnerability Finding">
+                        <div class="project-overlay">
+                            <div class="project-tags">
+                                <span>HTTP Request Smuggling</span>
                                 <span>Network Security</span>
                             </div>
                         </div>
                     </div>
                     <div class="project-content">
-                        <h3>Enterprise Network Security Assessment</h3>
-                        <p>Conducted comprehensive penetration testing for a financial institution's network infrastructure, identifying critical vulnerabilities and implementing robust security measures.</p>
+                        <h3>HTTP Request Smuggling Scanner (HRSS)</h3>
+                        <p>An automated HTTP Request Smuggling (HRS) scanner that safely detects parsing mismatches across proxies, gateways, and backend servers, produces reproducible lab-only PoCs, and provides actionable remediation guidance.</p>
                         <div class="project-details">
-                            <span><i class="fas fa-shield-alt"></i> 15+ Vulnerabilities Fixed</span>
-                            <span><i class="fas fa-chart-line"></i> 40% Security Improvement</span>
+                            <span><i class="fas fa-bug"></i> Reproducible PoCs</span>
+                            <span><i class="fas fa-tools"></i> Actionable Remediation</span>
                         </div>
-                        <a href="#" class="btn secondary">View Details</a>
+                        <a href="#" class="btn secondary animate-btn">View Details</a>
                     </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3" alt="Malware Analysis">
-                        <div class="project-overlay">
-                            <div class="project-tags">
-                                <span>Malware Analysis</span>
-                                <span>Threat Detection</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Advanced Malware Analysis System</h3>
-                        <p>Developed and implemented a sophisticated malware analysis platform for detecting and analyzing advanced persistent threats (APTs) in real-time.</p>
-                        <div class="project-details">
-                            <span><i class="fas fa-bug"></i> 100+ Malware Samples Analyzed</span>
-                            <span><i class="fas fa-clock"></i> 95% Detection Rate</span>
-                        </div>
-                        <a href="#" class="btn secondary">View Details</a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31" alt="Digital Forensics">
-                        <div class="project-overlay">
-                            <div class="project-tags">
-                                <span>Digital Forensics</span>
-                                <span>Incident Response</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Digital Forensics Investigation</h3>
-                        <p>Led a complex digital forensics investigation for a corporate data breach, successfully identifying the attack vector and recovering critical evidence.</p>
-                        <div class="project-details">
-                            <span><i class="fas fa-search"></i> 1000+ Hours of Analysis</span>
-                            <span><i class="fas fa-check-circle"></i> 100% Evidence Recovery</span>
-                        </div>
-                        <a href="#" class="btn secondary">View Details</a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1558494950-475a1cd81465" alt="Firewall Implementation">
-                        <div class="project-overlay">
-                            <div class="project-tags">
-                                <span>Firewall/IDS/IPS</span>
-                                <span>Network Defense</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Enterprise Firewall Implementation</h3>
-                        <p>Designed and deployed a comprehensive firewall and IDS/IPS solution for a healthcare organization, ensuring HIPAA compliance and data protection.</p>
-                        <div class="project-details">
-                            <span><i class="fas fa-shield-alt"></i> 99.9% Uptime</span>
-                            <span><i class="fas fa-filter"></i> 1M+ Threats Blocked</span>
-                        </div>
-                        <a href="#" class="btn secondary">View Details</a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1558494951-1e64b9715c5a" alt="Web Application Security">
-                        <div class="project-overlay">
-                            <div class="project-tags">
-                                <span>Web Security</span>
-                                <span>Penetration Testing</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Web Application Security Audit</h3>
-                        <p>Performed comprehensive security testing on a critical web application, identifying and remediating OWASP Top 10 vulnerabilities.</p>
-                        <div class="project-details">
-                            <span><i class="fas fa-code"></i> 50+ Security Flaws Fixed</span>
-                            <span><i class="fas fa-lock"></i> Zero Critical Vulnerabilities</span>
-                        </div>
-                        <a href="#" class="btn secondary">View Details</a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1558494952-1e64b9715c5a" alt="Security Training">
-                        <div class="project-overlay">
-                            <div class="project-tags">
-                                <span>Security Training</span>
-                                <span>Red Team</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Red Team Exercise</h3>
-                        <p>Led a sophisticated red team exercise for a government agency, simulating advanced persistent threats and improving incident response capabilities.</p>
-                        <div class="project-details">
-                            <span><i class="fas fa-users"></i> 50+ Team Members Trained</span>
-                            <span><i class="fas fa-chart-bar"></i> 60% Response Time Improvement</span>
-                        </div>
-                        <a href="#" class="btn secondary">View Details</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <h3>Email</h3>
-                        <p>arulprakashr01@gmail.com</p>
-                    </div>
-                </div>
-                <form id="contact-form" class="contact-form">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn primary">
-                        <span>Send Message</span>
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
+                </article>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer animate-section">
+        <canvas id="matrix-bg-footer" aria-hidden="true"></canvas>
         <div class="container">
             <div class="footer-content">
+                <div class="contact-info">
+                    <p>Contact: <a href="mailto:arulprakashr01@gmail.com">arulprakashr01@gmail.com</a></p>
+                </div>
                 <div class="social-links">
-                    <a href="#" class="social-link" data-tooltip="GitHub">
+                    <a href="#" class="social-link animate-social" data-tooltip="GitHub" aria-label="GitHub">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="#" class="social-link" data-tooltip="LinkedIn">
+                    <a href="#" class="social-link animate-social" data-tooltip="LinkedIn" aria-label="LinkedIn">
                         <i class="fab fa-linkedin"></i>
                     </a>
-                    <a href="#" class="social-link" data-tooltip="Twitter">
+                    <a href="#" class="social-link animate-social" data-tooltip="Twitter" aria-label="Twitter">
                         <i class="fab fa-twitter"></i>
                     </a>
                 </div>
-                <p class="copyright">&copy; 2024 Your Name. All rights reserved.</p>
+                <div class="terminal">
+                    <div class="terminal-header">Terminal</div>
+                    <div class="terminal-body">
+                        <span class="prompt">$ </span>
+                        <input type="text" id="terminal-input" placeholder="Type 'whoami', 'help', or 'sendmsg <subject> <message>'..." aria-label="Terminal input">
+                        <div id="terminal-output"></div>
+                    </div>
+                </div>
+                <p class="copyright">&copy; 2025 Arul Prakash R. All rights reserved.</p>
             </div>
         </div>
     </footer>
-
-    <!-- Add EmailJS Script -->
-    <script type="text/javascript">
-        (function() {
-            emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
-        })();
-    </script>
-
-    <!-- Remove the bug hunting guides section -->
-    <section id="scanner" class="scanner">
-        <div class="container">
-            <h2 class="section-title">Website Vulnerability Scanner</h2>
-            <div class="scanner-content">
-                <div class="scanner-form">
-                    <form id="scan-form" class="scan-form">
-                        <div class="form-group">
-                            <input type="url" id="target-url" name="target-url" placeholder="Enter website URL (e.g., https://example.com)" required>
-                        </div>
-                        <div class="scan-options">
-                            <h4>Scan Options</h4>
-                            <div class="option-group">
-                                <label>
-                                    <input type="checkbox" name="scan-type" value="sql" checked>
-                                    SQL Injection
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="scan-type" value="xss" checked>
-                                    XSS
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="scan-type" value="csrf" checked>
-                                    CSRF
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="scan-type" value="ssrf" checked>
-                                    SSRF
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="scan-type" value="xxe" checked>
-                                    XXE
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="scan-type" value="headers" checked>
-                                    Security Headers
-                                </label>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn primary">
-                            <i class="fas fa-search"></i>
-                            Start Scan
-                        </button>
-                    </form>
-                </div>
-
-                <div class="scan-results" id="scan-results" style="display: none;">
-                    <div class="results-header">
-                        <h3>Scan Results</h3>
-                        <div class="results-actions">
-                            <button id="download-report" class="btn secondary">
-                                <i class="fas fa-download"></i>
-                                Download Report
-                            </button>
-                            <button id="new-scan" class="btn secondary">
-                                <i class="fas fa-redo"></i>
-                                New Scan
-                            </button>
-                        </div>
-                    </div>
-                    <div class="results-content">
-                        <div class="scan-summary">
-                            <div class="summary-item">
-                                <span class="summary-value" id="result-url"></span>
-                            </div>
-                            <div class="summary-item">
-                                <span class="summary-label">Scan Date</span>
-                                <span class="summary-value" id="scan-date"></span>
-                            </div>
-                            <div class="summary-item">
-                                <span class="summary-label">Vulnerabilities Found</span>
-                                <span class="summary-value" id="vuln-count"></span>
-                            </div>
-                        </div>
-                        <div class="vulnerabilities-list" id="vulnerabilities-list">
-                            <!-- Vulnerabilities will be added here dynamically -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Add after the scanner section -->
-    <section id="bug-tips" class="bug-tips">
-        <div class="container">
-            <h2 class="section-title">Bug Hunting Tips</h2>
-            <div class="tips-grid">
-                <div class="tip-card" data-bug="xss">
-                    <div class="tip-icon">
-                        <i class="fas fa-bug"></i>
-                    </div>
-                    <h3>Cross-Site Scripting (XSS)</h3>
-                    <p>Learn how to find and exploit XSS vulnerabilities</p>
-                    <button class="btn secondary view-tip">View Guide</button>
-                </div>
-
-                <div class="tip-card" data-bug="sql">
-                    <div class="tip-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>SQL Injection</h3>
-                    <p>Master SQL injection techniques and prevention</p>
-                    <button class="btn secondary view-tip">View Guide</button>
-                </div>
-
-                <div class="tip-card" data-bug="csrf">
-                    <div class="tip-icon">
-                        <i class="fas fa-exchange-alt"></i>
-                    </div>
-                    <h3>CSRF</h3>
-                    <p>Understand Cross-Site Request Forgery attacks</p>
-                    <button class="btn secondary view-tip">View Guide</button>
-                </div>
-
-                <div class="tip-card" data-bug="ssrf">
-                    <div class="tip-icon">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <h3>SSRF</h3>
-                    <p>Server-Side Request Forgery exploitation guide</p>
-                    <button class="btn secondary view-tip">View Guide</button>
-                </div>
-
-                <div class="tip-card" data-bug="xxe">
-                    <div class="tip-icon">
-                        <i class="fas fa-file-code"></i>
-                    </div>
-                    <h3>XXE</h3>
-                    <p>XML External Entity injection techniques</p>
-                    <button class="btn secondary view-tip">View Guide</button>
-                </div>
-
-                <div class="tip-card" data-bug="headers">
-                    <div class="tip-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Security Headers</h3>
-                    <p>Security headers testing and implementation</p>
-                    <button class="btn secondary view-tip">View Guide</button>
-                </div>
-
-                <div class="tip-card" data-bug="rce">
-                    <div class="tip-icon">
-                        <i class="fas fa-terminal"></i>
-                    </div>
-                    <h3>Remote Code Execution</h3>
-                    <p>Learn about RCE vulnerabilities and exploitation</p>
-                    <button class="btn secondary view-tip">View Guide</button>
-                </div>
-
-                <div class="tip-card" data-bug="idor">
-                    <div class="tip-icon">
-                        <i class="fas fa-key"></i>
-                    </div>
-                    <h3>IDOR</h3>
-                    <p>Insecure Direct Object Reference testing</p>
-                    <button class="btn secondary view-tip">View Guide</button>
-                </div>
-
-                <div class="tip-card" data-bug="file_upload">
-                    <div class="tip-icon">
-                        <i class="fas fa-file-upload"></i>
-                    </div>
-                    <h3>File Upload</h3>
-                    <p>File upload vulnerability exploitation</p>
-                    <button class="btn secondary view-tip">View Guide</button>
-                </div>
-
-                <div class="tip-card" data-bug="jwt">
-                    <div class="tip-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3>JWT</h3>
-                    <p>JSON Web Token vulnerabilities</p>
-                    <button class="btn secondary view-tip">View Guide</button>
-                </div>
-
-                <div class="tip-card" data-bug="race_condition">
-                    <div class="tip-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h3>Race Conditions</h3>
-                    <p>Race condition vulnerability testing</p>
-                    <button class="btn secondary view-tip">View Guide</button>
-                </div>
-
-                <div class="tip-card" data-bug="deserialization">
-                    <div class="tip-icon">
-                        <i class="fas fa-file-code"></i>
-                    </div>
-                    <h3>Insecure Deserialization</h3>
-                    <p>Insecure deserialization vulnerabilities</p>
-                    <button class="btn secondary view-tip">View Guide</button>
-                </div>
-
-                <div class="tip-card" data-bug="business_logic">
-                    <div class="tip-icon">
-                        <i class="fas fa-file-code"></i>
-                    </div>
-                    <h3>Business Logic Vulnerabilities</h3>
-                    <p>Business logic vulnerabilities in applications</p>
-                    <button class="btn secondary view-tip">View Guide</button>
-                </div>
-
-                <div class="tip-card" data-bug="api_security">
-                    <div class="tip-icon">
-                        <i class="fas fa-file-code"></i>
-                    </div>
-                    <h3>API Security</h3>
-                    <p>API security testing and vulnerabilities</p>
-                    <button class="btn secondary view-tip">View Guide</button>
-                </div>
-
-                <div class="tip-card" data-bug="graphql">
-                    <div class="tip-icon">
-                        <i class="fas fa-file-code"></i>
-                    </div>
-                    <h3>GraphQL Security</h3>
-                    <p>GraphQL security testing and vulnerabilities</p>
-                    <button class="btn secondary view-tip">View Guide</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Bug Hunting Tips Modal -->
-    <div id="tip-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modal-title"></h2>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body" id="modal-content">
-                <!-- Content will be loaded dynamically -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Keep only the scanner-related scripts -->
-    <script>
-    document.getElementById('scan-form').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const targetUrl = document.getElementById('target-url').value;
-        const scanTypes = Array.from(document.querySelectorAll('input[name="scan-type"]:checked')).map(cb => cb.value);
-        
-        // Show loading state
-        const submitBtn = this.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Scanning...';
-        submitBtn.disabled = true;
-
-        try {
-            // Simulate scanning with more accurate results
-            const results = await performScan(targetUrl, scanTypes);
-            
-            // Update results
-            document.getElementById('result-url').textContent = targetUrl;
-            document.getElementById('scan-date').textContent = new Date().toLocaleString();
-            document.getElementById('vuln-count').textContent = results.vulnerabilities.length;
-
-            // Display vulnerabilities
-            const vulnList = document.getElementById('vulnerabilities-list');
-            vulnList.innerHTML = results.vulnerabilities.map(vuln => `
-                <div class="vulnerability-item ${vuln.severity.toLowerCase()}">
-                    <div class="vuln-header">
-                        <h4>${vuln.name}</h4>
-                        <span class="severity ${vuln.severity.toLowerCase()}">${vuln.severity}</span>
-                    </div>
-                    <p>${vuln.description}</p>
-                    <div class="vuln-details">
-                        ${vuln.details.map(detail => `<p><strong>${detail.label}:</strong> ${detail.value}</p>`).join('')}
-                        ${vuln.recommendation ? `<div class="recommendation"><strong>Recommendation:</strong> ${vuln.recommendation}</div>` : ''}
-                    </div>
-                </div>
-            `).join('');
-
-            // Show results
-            document.getElementById('scan-results').style.display = 'block';
-        } catch (error) {
-            showNotification('Error during scan: ' + error.message, 'error');
-        } finally {
-            // Reset button
-            submitBtn.innerHTML = originalBtnText;
-            submitBtn.disabled = false;
-        }
-    });
-
-    async function performScan(url, scanTypes) {
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 2000));
-
-        // This would be replaced with actual scanning logic
-        const vulnerabilities = [];
-
-        // Only add vulnerabilities if they are confirmed
-        if (scanTypes.includes('headers')) {
-            const headers = await checkSecurityHeaders(url);
-            if (headers.missing.length > 0) {
-                vulnerabilities.push({
-                    name: "Missing Security Headers",
-                    severity: "Medium",
-                    description: "Several important security headers are missing, which could expose the application to various attacks.",
-                    details: headers.missing.map(header => ({
-                        label: "Missing Header",
-                        value: header
-                    })),
-                    recommendation: "Implement the following security headers: " + headers.missing.join(', ')
-                });
-            }
-        }
-
-        if (scanTypes.includes('sql')) {
-            const sqlInjection = await checkSQLInjection(url);
-            if (sqlInjection.vulnerable) {
-                vulnerabilities.push({
-                    name: "SQL Injection Vulnerability",
-                    severity: "High",
-                    description: "Confirmed SQL injection vulnerability in the application.",
-                    details: [
-                        { label: "Location", value: sqlInjection.location },
-                        { label: "Parameter", value: sqlInjection.parameter },
-                        { label: "Payload", value: sqlInjection.payload }
-                    ],
-                    recommendation: "Use parameterized queries or prepared statements to prevent SQL injection."
-                });
-            }
-        }
-
-        if (scanTypes.includes('xss')) {
-            const xss = await checkXSS(url);
-            if (xss.vulnerable) {
-                vulnerabilities.push({
-                    name: "Cross-Site Scripting (XSS)",
-                    severity: "High",
-                    description: "Confirmed XSS vulnerability that could allow attackers to execute malicious scripts.",
-                    details: [
-                        { label: "Location", value: xss.location },
-                        { label: "Parameter", value: xss.parameter },
-                        { label: "Payload", value: xss.payload }
-                    ],
-                    recommendation: "Implement proper input validation and output encoding."
-                });
-            }
-        }
-
-        return {
-            target: url,
-            scanDate: new Date().toLocaleString(),
-            vulnerabilities: vulnerabilities
-        };
-    }
-
-    // Simulated security checks
-    async function checkSecurityHeaders(url) {
-        // This would be replaced with actual header checking logic
-        return {
-            missing: ['Content-Security-Policy', 'X-Frame-Options']
-        };
-    }
-
-    async function checkSQLInjection(url) {
-        // This would be replaced with actual SQL injection testing
-        return {
-            vulnerable: false
-        };
-    }
-
-    async function checkXSS(url) {
-        // This would be replaced with actual XSS testing
-        return {
-            vulnerable: false
-        };
-    }
-
-    // Download Report
-    document.getElementById('download-report').addEventListener('click', function() {
-        const vulnerabilities = Array.from(document.querySelectorAll('.vulnerability-item')).map(item => {
-            const header = item.querySelector('.vuln-header h4').textContent;
-            const severity = item.querySelector('.severity').textContent;
-            const description = item.querySelector('p').textContent;
-            const details = Array.from(item.querySelectorAll('.vuln-details p')).map(p => {
-                const [label, value] = p.textContent.split(':').map(s => s.trim());
-                return { label, value };
-            });
-            const recommendation = item.querySelector('.recommendation')?.textContent.split(':')[1].trim();
-
-            return {
-                name: header,
-                severity,
-                description,
-                details,
-                recommendation
-            };
-        });
-
-        const report = {
-            title: "Website Vulnerability Scan Report",
-            developer: "Developed by Arul Prakash R",
-            date: new Date().toLocaleString(),
-            target: document.getElementById('result-url').textContent,
-            vulnerabilities: vulnerabilities
-        };
-
-        // Generate PDF
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        // Add title
-        doc.setFontSize(20);
-        doc.text(report.title, 20, 20);
-        
-        // Add metadata
-        doc.setFontSize(12);
-        doc.text(`Developer: ${report.developer}`, 20, 30);
-        doc.text(`Date: ${report.date}`, 20, 40);
-        doc.text(`Target: ${report.target}`, 20, 50);
-        doc.text(`Vulnerabilities Found: ${report.vulnerabilities.length}`, 20, 60);
-
-        // Add vulnerabilities table
-        const tableData = report.vulnerabilities.map(vuln => [
-            vuln.name,
-            vuln.severity,
-            vuln.description,
-            vuln.recommendation || 'N/A'
-        ]);
-
-        doc.autoTable({
-            startY: 70,
-            head: [['Vulnerability', 'Severity', 'Description', 'Recommendation']],
-            body: tableData,
-            theme: 'grid',
-            styles: { fontSize: 10 },
-            headStyles: { fillColor: [41, 128, 185] }
-        });
-
-        // Save the PDF
-        doc.save(`vulnerability-report-${new Date().toISOString().split('T')[0]}.pdf`);
-    });
-
-    // New Scan
-    document.getElementById('new-scan').addEventListener('click', function() {
-        document.getElementById('scan-results').style.display = 'none';
-        document.getElementById('scan-form').reset();
-    });
-    </script>
-
-    <!-- Keep only the scanner-related styles -->
-    <style>
-    .scanner {
-        padding: 80px 0;
-        background: var(--background);
-    }
-
-    .scanner-content {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
-    .scan-form {
-        background: var(--card-background);
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    .form-group input[type="url"] {
-        width: 100%;
-        padding: 15px;
-        font-size: 1.1em;
-        background: var(--background);
-        border: 2px solid var(--border);
-        border-radius: 8px;
-        color: var(--text);
-        transition: all 0.3s ease;
-    }
-
-    .form-group input[type="url"]:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 2px var(--glow);
-        outline: none;
-    }
-
-    .scan-options {
-        margin: 20px 0;
-    }
-
-    .scan-options h4 {
-        margin-bottom: 15px;
-        color: var(--text);
-    }
-
-    .option-group {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-    }
-
-    .option-group label {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        cursor: pointer;
-    }
-
-    .option-group input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-        cursor: pointer;
-    }
-
-    .scan-results {
-        margin-top: 30px;
-        background: var(--card-background);
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .results-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .results-actions {
-        display: flex;
-        gap: 10px;
-    }
-
-    .scan-summary {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-        margin-bottom: 30px;
-        padding: 20px;
-        background: var(--background);
-        border-radius: 8px;
-    }
-
-    .summary-item {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .summary-label {
-        color: var(--text-secondary);
-        font-size: 0.9em;
-    }
-
-    .summary-value {
-        color: var(--text);
-        font-size: 1.1em;
-        font-weight: 500;
-    }
-
-    .vulnerabilities-list {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .vulnerability-item {
-        background: var(--background);
-        padding: 20px;
-        border-radius: 8px;
-        border-left: 4px solid var(--primary);
-    }
-
-    .vulnerability-item.high {
-        border-left-color: var(--error);
-    }
-
-    .vulnerability-item.medium {
-        border-left-color: var(--warning);
-    }
-
-    .vulnerability-item.low {
-        border-left-color: var(--success);
-    }
-
-    .vuln-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-
-    .vuln-header h4 {
-        margin: 0;
-        color: var(--text);
-    }
-
-    .severity {
-        padding: 5px 10px;
-        border-radius: 15px;
-        font-size: 0.8em;
-        font-weight: 500;
-    }
-
-    .severity.high {
-        background: var(--error);
-        color: white;
-    }
-
-    .severity.medium {
-        background: var(--warning);
-        color: var(--text);
-    }
-
-    .severity.low {
-        background: var(--success);
-        color: white;
-    }
-
-    .vuln-details {
-        margin-top: 15px;
-        padding-top: 15px;
-        border-top: 1px solid var(--border);
-    }
-
-    .vuln-details p {
-        margin: 5px 0;
-        color: var(--text);
-    }
-
-    .recommendation {
-        margin-top: 15px;
-        padding: 10px;
-        background: var(--card-background);
-        border-radius: 5px;
-        color: var(--text);
-    }
-
-    @media (max-width: 768px) {
-        .results-header {
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .results-actions {
-            width: 100%;
-            justify-content: center;
-        }
-
-        .scan-summary {
-            grid-template-columns: 1fr;
-        }
-    }
-    </style>
-
-    <!-- Add styles for bug hunting tips -->
-    <style>
-    .bug-tips {
-        padding: 80px 0;
-        background: var(--background);
-    }
-
-    .tips-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
-        margin-top: 40px;
-    }
-
-    .tip-card {
-        background: var(--card-background);
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        transition: transform 0.3s ease;
-    }
-
-    .tip-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .tip-icon {
-        font-size: 2.5em;
-        color: var(--primary);
-        margin-bottom: 20px;
-    }
-
-    .tip-card h3 {
-        margin: 15px 0;
-        color: var(--text);
-    }
-
-    .tip-card p {
-        color: var(--text-secondary);
-        margin-bottom: 20px;
-    }
-
-    /* Modal Styles */
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 1000;
-    }
-
-    .modal-content {
-        position: relative;
-        background: var(--card-background);
-        margin: 50px auto;
-        padding: 0;
-        width: 90%;
-        max-width: 800px;
-        max-height: 80vh;
-        border-radius: 10px;
-        overflow-y: auto;
-    }
-
-    .modal-header {
-        padding: 20px;
-        border-bottom: 1px solid var(--border);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .modal-header h2 {
-        margin: 0;
-        color: var(--text);
-    }
-
-    .close-modal {
-        background: none;
-        border: none;
-        font-size: 1.5em;
-        color: var(--text);
-        cursor: pointer;
-    }
-
-    .modal-body {
-        padding: 20px;
-    }
-
-    .guide-section {
-        margin-bottom: 30px;
-    }
-
-    .guide-section h4 {
-        color: var(--primary);
-        margin-bottom: 15px;
-    }
-
-    .guide-section pre {
-        background: var(--background);
-        padding: 15px;
-        border-radius: 5px;
-        overflow-x: auto;
-    }
-
-    .guide-section code {
-        color: var(--primary);
-        font-family: monospace;
-    }
-
-    .guide-section ul, .guide-section ol {
-        padding-left: 20px;
-    }
-
-    .guide-section li {
-        margin-bottom: 10px;
-        color: var(--text);
-    }
-    </style>
-
-    <!-- Add script for bug hunting tips -->
-    <script src="js/bug-guides.js"></script>
 </body>
-</html> 
+</html>

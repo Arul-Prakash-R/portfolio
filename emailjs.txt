@@ -1,0 +1,3 @@
+template_id= template_6u3mi8b
+servie_id= service_muid74x
+public_key = 8HDuCD7IjRceaYMQ9
