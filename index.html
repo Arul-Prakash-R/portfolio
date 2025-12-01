@@ -13,6 +13,7 @@
         href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;900&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <!-- Interactive Terminal Modal -->
     <div id="terminal-modal" class="terminal-modal hidden">
         <div class="terminal-header">
@@ -86,6 +87,8 @@
                         <li><a href="#about" class="nav-link">~/About</a></li>
                         <li><a href="#skills" class="nav-link">~/Skills</a></li>
                         <li><a href="#projects" class="nav-link">~/Projects</a></li>
+                        <li><a href="blog.html" class="nav-link">~/Blog</a></li>
+                        <li><a href="pentest.html" class="nav-link">~/Do-Pentest</a></li>
                     </ul>
                     <button class="menu-btn" aria-label="Toggle menu" aria-expanded="false">
                         <span></span>
@@ -120,7 +123,7 @@
                         </div>
                     </div>
                     <div class="cta-buttons">
-                        <a href="assets/resume.pdf" class="btn primary animate-btn" download>Download Resume <i
+                        <a href="Arul Prakash R.pdf" class="btn primary animate-btn" download>Download Resume <i
                                 class="fas fa-download"></i></a>
                         <a href="#projects" class="btn secondary animate-btn">View Projects <i
                                 class="fas fa-shield-alt"></i></a>
@@ -138,12 +141,11 @@
                         <div class="flip-container">
                             <div class="flipper">
                                 <div class="front">
-                                    <img src="C:\Users\Admin\Downloads\1759132189750.jpg" alt="Arul Prakash R"
-                                        class="profile-photo-enhanced">
+                                    <img src="profile1-new.jpg" alt="Arul Prakash R" class="profile-photo-enhanced">
                                 </div>
                                 <div class="back">
-                                    <img src="C:\Users\Admin\Downloads\1759132189750.jpg" alt="Arul Prakash R"
-                                        class="profile-photo-enhanced" style="filter: invert(1);">
+                                    <img src="profile1-new.jpg" alt="Arul Prakash R" class="profile-photo-enhanced"
+                                        style="filter: invert(1);">
                                 </div>
                             </div>
                         </div>
@@ -222,7 +224,7 @@
                             <h3>Network Security</h3>
                             <span class="skill-percentage">95%</span>
                         </div>
-                        <p>Securing infrastructure and monitoring traffic</p>
+                        <p>Securing infrastructure and monitoring the network traffic</p>
                         <div class="skill-progress">
                             <div class="progress-bar" style="width: 95%"></div>
                         </div>
@@ -298,6 +300,40 @@
                             <a href="#" class="btn secondary animate-btn">View Details</a>
                         </div>
                     </article>
+
+                </div>
+
+                <!-- Bug Reported / Hall of Fame Section -->
+                <div class="bug-reported-section animate-section">
+                    <h3 class="section-subtitle glitch" data-text="> Bug Reported / Hall of Fame_">> Bug Reported / Hall
+                        of Fame_</h3>
+                    <div class="logo-carousel-container">
+                        <div class="logo-carousel">
+                            <!-- Set 1 -->
+                            <div class="logo-item"><i class="fab fa-google"></i> Google</div>
+                            <div class="logo-item"><i class="fab fa-microsoft"></i> Microsoft</div>
+                            <div class="logo-item"><i class="fab fa-apple"></i> Apple</div>
+                            <div class="logo-item"><i class="fas fa-rocket"></i> NASA</div>
+                            <div class="logo-item"><i class="fas fa-tv"></i> LG</div>
+                            <div class="logo-item"><i class="fab fa-amazon"></i> Amazon</div>
+                            <div class="logo-item"><i class="fab fa-meta"></i> Meta</div>
+                            <div class="logo-item"><i class="fab fa-sony"></i> Sony</div>
+                            <div class="logo-item"><i class="fab fa-yahoo"></i> Yahoo</div>
+                            <div class="logo-item"><i class="fab fa-uber"></i> Uber</div>
+
+                            <!-- Set 2 (Duplicate for seamless loop) -->
+                            <div class="logo-item"><i class="fab fa-google"></i> Google</div>
+                            <div class="logo-item"><i class="fab fa-microsoft"></i> Microsoft</div>
+                            <div class="logo-item"><i class="fab fa-apple"></i> Apple</div>
+                            <div class="logo-item"><i class="fas fa-rocket"></i> NASA</div>
+                            <div class="logo-item"><i class="fas fa-tv"></i> LG</div>
+                            <div class="logo-item"><i class="fab fa-amazon"></i> Amazon</div>
+                            <div class="logo-item"><i class="fab fa-meta"></i> Meta</div>
+                            <div class="logo-item"><i class="fab fa-sony"></i> Sony</div>
+                            <div class="logo-item"><i class="fab fa-yahoo"></i> Yahoo</div>
+                            <div class="logo-item"><i class="fab fa-uber"></i> Uber</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -317,18 +353,18 @@
                         <a href="#" class="social-link animate-social" data-tooltip="LinkedIn" aria-label="LinkedIn">
                             <i class="fab fa-linkedin"></i>
                         </a>
-                        <a href="#" class="social-link animate-social" data-tooltip="Twitter" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
+                        <a href="#" class="social-link animate-social" data-tooltip="Instagram" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
                         </a>
                     </div>
                     <div class="terminal">
                         <div class="terminal-header">Terminal</div>
                         <div class="terminal-body">
                             <span class="prompt">$ </span>
-                            <input type="text" id="terminal-input"
-                                placeholder="Type 'whoami', 'help', or 'sendmsg <subject> <message>'..."
+                            <input type="text" id="footer-terminal-input"
+                                placeholder="Type 'whoami', 'help', or 'sendmsg <message>'..."
                                 aria-label="Terminal input">
-                            <div id="terminal-output"></div>
+                            <div id="footer-terminal-output"></div>
                         </div>
                     </div>
                     <p class="copyright">&copy; 2025 Arul Prakash R. All rights reserved.</p>

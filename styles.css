@@ -256,13 +256,56 @@ button,
     box-shadow: 0 0 20px var(--glow);
 }
 
+/* Social Icons - 3D & Brand Colors */
 .animate-social {
-    transition: transform 0.4s ease, color 0.3s ease;
+    transition: transform 0.4s ease;
+    display: inline-block;
+}
+
+.animate-social i {
+    font-size: 1.5em;
+    /* Reduced size */
+    transition: filter 0.3s ease, transform 0.3s ease;
 }
 
 .animate-social:hover {
-    transform: rotate(360deg);
-    color: var(--accent);
+    transform: translateY(-5px) rotate(360deg);
+}
+
+/* GitHub - Default 3D White */
+.animate-social .fa-github {
+    color: #ffffff;
+    filter: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.5));
+}
+
+/* LinkedIn - Default 3D Blue */
+.animate-social .fa-linkedin {
+    color: #0077b5;
+    filter: drop-shadow(3px 5px 2px rgba(0, 119, 181, 0.4));
+}
+
+/* Instagram - Default 3D Gradient */
+.animate-social .fa-instagram {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    /* Fallback */
+    filter: drop-shadow(3px 5px 2px rgba(214, 36, 159, 0.4));
+}
+
+/* Hover Enhancements */
+.animate-social:hover .fa-github {
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
+}
+
+.animate-social:hover .fa-linkedin {
+    filter: drop-shadow(0 0 15px rgba(0, 119, 181, 0.8));
+}
+
+.animate-social:hover .fa-instagram {
+    filter: drop-shadow(0 0 15px rgba(214, 36, 159, 0.8));
 }
 
 /* Glitch Effect */
@@ -743,10 +786,8 @@ body.light-mode .dark-mode-toggle i::before {
     /* Creates 3D space for the flip effect */
     cursor: pointer;
     /* Indicates it's clickable */
-    width: 180px;
-    /* Match your existing profile photo width */
-    height: 180px;
-    /* Match your existing profile photo height */
+    width: 400px;
+    height: 400px;
 }
 
 .flipper {
@@ -774,9 +815,7 @@ body.light-mode .dark-mode-toggle i::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    /* Keep the circular shape */
-    overflow: hidden;
+    background: transparent;
     /* Ensure images don't overflow */
 }
 
@@ -797,9 +836,10 @@ body.light-mode .dark-mode-toggle i::before {
 
 .profile-photo-enhanced {
     width: 100%;
-    border-radius: 12px;
-    border: 3px solid var(--primary);
-    box-shadow: 0 0 20px var(--glow);
+    width: 100%;
+    /* border-radius removed for transparent look */
+    /* border removed */
+    /* box-shadow removed */
 }
 
 /* Skills Section */
@@ -821,7 +861,7 @@ body.light-mode .dark-mode-toggle i::before {
     padding: 25px;
     border-radius: 12px;
     border: 2px solid var(--border);
-    text-align: center;
+    text-align: left;
     box-shadow: 0 0 12px var(--glow);
     position: relative;
     z-index: 2;
@@ -831,6 +871,55 @@ body.light-mode .dark-mode-toggle i::before {
     font-size: 3em;
     color: var(--primary);
     margin-bottom: 20px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.skill-card:hover i {
+    transform: scale(1.1);
+}
+
+/* Expertise Icon Colors */
+.skill-card .fa-user-secret {
+    color: #00ff41;
+    /* Matrix Green */
+    filter: drop-shadow(0 0 10px rgba(0, 255, 65, 0.6));
+}
+
+.skill-card .fa-bug {
+    color: #ff3333;
+    /* Danger Red */
+    filter: drop-shadow(0 0 10px rgba(255, 51, 51, 0.6));
+}
+
+.skill-card .fa-search {
+    color: #00bfff;
+    /* Deep Sky Blue */
+    filter: drop-shadow(0 0 10px rgba(0, 191, 255, 0.6));
+}
+
+.skill-card .fa-network-wired {
+    color: #ffaa00;
+    /* Orange */
+    filter: drop-shadow(0 0 10px rgba(255, 170, 0, 0.6));
+}
+
+.skill-card .fa-crosshairs {
+    color: #d6249f;
+    /* Magenta/Purple */
+    filter: drop-shadow(0 0 10px rgba(214, 36, 159, 0.6));
+}
+
+/* Pentest Page Specific Icons */
+.skill-card .fa-globe {
+    color: #00bcd4;
+    /* Cyan */
+    filter: drop-shadow(0 0 10px rgba(0, 188, 212, 0.6));
+}
+
+.skill-card .fa-mobile-alt {
+    color: #ffd700;
+    /* Gold */
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
 }
 
 .skill-card h3 {
@@ -929,6 +1018,69 @@ body.light-mode .dark-mode-toggle i::before {
     width: 100%;
     height: 200px;
     object-fit: cover;
+}
+
+/* Blog Grid - Tighter columns for smaller boxes */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+    /* Fixed range for boxy look */
+    gap: 30px;
+    justify-content: center;
+}
+
+/* Blog Card - Vertical Square-ish Layout */
+.blog-card {
+    display: flex;
+    flex-direction: column;
+    height: 320px;
+    /* Fixed height to match width approx */
+    position: relative;
+}
+
+.blog-thumb {
+    width: 100%;
+    height: 180px;
+    /* Top portion */
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.blog-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.blog-card:hover .blog-thumb img {
+    transform: scale(1.1);
+}
+
+.blog-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--card-background);
+}
+
+.blog-content h3 {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.blog-content p {
+    font-size: 0.9em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 10px;
 }
 
 .project-overlay {
@@ -1535,4 +1687,207 @@ body.light-mode .dark-mode-toggle i::before {
         padding: 8px 15px;
         font-size: 0.9em;
     }
+}
+
+/* Bug Reported Section */
+.bug-reported-section {
+    margin-top: 80px;
+    text-align: center;
+}
+
+.section-subtitle {
+    font-size: 2em;
+    margin-bottom: 40px;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.logo-carousel-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    background: transparent;
+    padding: 30px 0;
+}
+
+.logo-carousel-container::before,
+.logo-carousel-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.logo-carousel-container::before {
+    left: 0;
+    background: linear-gradient(to right, var(--background), transparent);
+}
+
+.logo-carousel-container::after {
+    right: 0;
+    background: linear-gradient(to left, var(--background), transparent);
+}
+
+.logo-carousel {
+    display: flex;
+    width: max-content;
+    animation: scroll-logos 40s linear infinite;
+}
+
+.logo-carousel:hover {
+    animation-play-state: paused;
+}
+
+.logo-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--text-secondary);
+    padding: 0 50px;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.logo-item i {
+    font-size: 1.8em;
+    color: var(--secondary);
+    transition: transform 0.3s ease;
+}
+
+.logo-item:hover {
+    color: var(--primary);
+    transform: scale(1.1);
+    text-shadow: 0 0 10px var(--glow);
+}
+
+.logo-item:hover i {
+    /* Default hover color if not overridden */
+    color: var(--accent);
+    transform: rotate(10deg);
+}
+
+/* Brand Specific Hover Colors */
+.logo-item:hover .fa-google {
+    color: #4285F4;
+    filter: drop-shadow(0 0 5px #4285F4);
+}
+
+.logo-item:hover .fa-microsoft {
+    color: #00A4EF;
+    filter: drop-shadow(0 0 5px #00A4EF);
+}
+
+.logo-item:hover .fa-apple {
+    color: #A2AAAD;
+    filter: drop-shadow(0 0 5px #A2AAAD);
+}
+
+/* NASA uses fa-rocket */
+.logo-item:hover .fa-rocket {
+    color: #0B3D91;
+    filter: drop-shadow(0 0 5px #0B3D91);
+}
+
+/* LG uses fa-tv */
+.logo-item:hover .fa-tv {
+    color: #A50034;
+    filter: drop-shadow(0 0 5px #A50034);
+}
+
+.logo-item:hover .fa-amazon {
+    color: #FF9900;
+    filter: drop-shadow(0 0 5px #FF9900);
+}
+
+.logo-item:hover .fa-meta {
+    color: #0668E1;
+    filter: drop-shadow(0 0 5px #0668E1);
+}
+
+.logo-item:hover .fa-sony {
+    color: #FFFFFF;
+    filter: drop-shadow(0 0 5px #FFFFFF);
+}
+
+.logo-item:hover .fa-yahoo {
+    color: #6001D2;
+    filter: drop-shadow(0 0 5px #6001D2);
+}
+
+.logo-item:hover .fa-uber {
+    color: #FFFFFF;
+    filter: drop-shadow(0 0 5px #FFFFFF);
+}
+
+@keyframes scroll-logos {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Responsive adjustment for Logos */
+@media (max-width: 768px) {
+    .logo-item {
+        font-size: 1.2em;
+        padding: 0 25px;
+    }
+
+    .logo-item i {
+        font-size: 1.5em;
+    }
+
+    .section-subtitle {
+        font-size: 1.5em;
+    }
+}
+
+/* Floating Icons Container */
+.floating-icons-container {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Individual Floating Icons */
+.floating-icon {
+    position: absolute;
+    font-size: 2.5rem;
+    z-index: 2;
+    filter: drop-shadow(0 0 10px currentColor);
+    animation: float-icon 3s ease-in-out infinite;
+    transition: transform 0.1s linear;
+    /* Smooth scroll movement */
+}
+
+/* Floating Animation (Idle) */
+@keyframes float-icon {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Ensure Flip Container is centered */
+.flip-container {
+    z-index: 1;
+    /* Behind icons if they overlap, or adjust as needed */
 }

